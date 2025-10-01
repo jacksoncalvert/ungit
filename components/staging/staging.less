@@ -1,0 +1,427 @@
+@import 'public/less/variables.less';
+
+.staging {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 40px);
+  background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+  color: #e0e6ed;
+  padding: 30px;
+  padding-top: 70px; // Space for tabs
+  overflow: visible; // Allow tooltips to show
+
+  .form-control {
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #e0e6ed;
+    transition: all 0.2s;
+
+    &:focus {
+      background-color: rgba(255, 255, 255, 0.12);
+      border-color: #4a9eff;
+      box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.15);
+      color: #ffffff;
+    }
+
+    &:disabled {
+      background-color: rgba(64, 36, 43, 0.75);
+    }
+  }
+
+  textarea.commit-body {
+    resize: vertical;
+    min-height: 80px;
+    max-height: 200px;
+  }
+
+  .arrow {
+    display: none;
+  }
+
+  .commitnpush.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .file-area {
+    position: relative;
+    overflow: visible; // Allow tooltips to show
+  }
+
+  .validationError {
+    display: none;
+    color: #d6542d;
+    padding: 0.25em;
+  }
+
+  &:hover .validationError {
+    display: inline-block;
+  }
+
+  .diffContainer {
+    margin-top: 5px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    overflow: visible; // Allow tooltips to show
+  }
+
+  .panel-body {
+    padding: 0;
+    display: flex;
+    gap: 40px;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    overflow: visible; // Allow tooltips to show
+  }
+
+  .nux {
+    padding: 60px 20px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 1.1em;
+    font-weight: 300;
+  }
+
+  .row {
+    margin: 0;
+    display: flex;
+    gap: 40px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .col-lg-3 {
+    flex: 0 0 420px;
+    padding: 0;
+    max-width: 420px;
+  }
+
+  .col-lg-9 {
+    flex: 1;
+    padding: 0;
+    min-width: 0;
+    max-width: calc(100% - 460px); // 420px + 40px gap
+    overflow: visible; // Allow tooltips to show
+  }
+
+  .form-control {
+    margin-bottom: 12px;
+    font-size: 0.95em;
+    padding: 10px 12px;
+    border-radius: 6px;
+  }
+
+  .commit-grp, .btn-stg-cancel, .btn-stg-abort {
+    margin-top: 12px;
+
+    .btn {
+      border-radius: 6px;
+      font-weight: 500;
+      padding: 10px 20px;
+      transition: all 0.2s;
+
+      &.btn-primary {
+        background: linear-gradient(135deg, #4a9eff 0%, #2d7bd4 100%);
+        border: none;
+        
+        &:hover {
+          background: linear-gradient(135deg, #66b3ff 0%, #4a9eff 100%);
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(74, 158, 255, 0.3);
+        }
+      }
+
+      &.btn-default {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #e0e6ed;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.12);
+          border-color: rgba(255, 255, 255, 0.25);
+        }
+      }
+    }
+  }
+
+  .discard {
+    background: rgba(231, 76, 60, 0.15);
+    color: #ff6b6b;
+    border-radius: 4px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 0.85em;
+    border: 1px solid rgba(231, 76, 60, 0.3);
+    transition: all 0.2s;
+
+    &:focus,
+    &:hover {
+      background: rgba(231, 76, 60, 0.25);
+      color: #ff8787;
+      border-color: rgba(231, 76, 60, 0.5);
+    }
+  }
+
+  .ignore {
+    background: rgba(155, 89, 182, 0.15);
+    color: #b19cd9;
+    border-radius: 4px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.85em;
+    border: 1px solid rgba(155, 89, 182, 0.3);
+    transition: all 0.2s;
+
+    &:focus,
+    &:hover {
+      background: rgba(155, 89, 182, 0.25);
+      color: #d0bfea;
+      border-color: rgba(155, 89, 182, 0.5);
+    }
+  }
+
+  .patch {
+    background: rgba(46, 204, 113, 0.2);
+    color: #6ee7b7;
+    border-radius: 4px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.85em;
+    border: 1px solid rgba(46, 204, 113, 0.3);
+    transition: all 0.2s;
+
+    &:focus,
+    &:hover {
+      background: rgba(46, 204, 113, 0.3);
+      color: #86efac;
+      border-color: rgba(46, 204, 113, 0.5);
+    }
+  }
+
+  .d2h-code-line-prefix input[type='checkbox'] {
+    margin: 0;
+    margin-right: -5px;
+    vertical-align: sub;
+  }
+
+  .files {
+    position: relative;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.25);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    padding-top: 10px; // Add padding to prevent tooltip clipping at top
+    width: 100%;
+    max-width: 100%;
+
+    .file {
+      padding: 0.5em;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: nowrap;
+      max-width: 100%;
+      width: 100%;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &.showingDiffs {
+        .name {
+          background: rgba(74, 158, 255, 0.25);
+          color: #ffffff;
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+      }
+
+      .checkmark {
+        flex-shrink: 0;
+        cursor: pointer;
+        color: rgba(255, 255, 255, 0.3);
+        transition: color 0.2s;
+
+        &.checked {
+          color: #4ade80;
+        }
+
+        &:hover {
+          color: rgba(255, 255, 255, 0.6);
+        }
+
+        span {
+          font-size: 16px;
+        }
+      }
+
+      .name {
+        background: transparent;
+        font-size: 0.95em;
+        cursor: pointer;
+        padding: 10px 14px;
+        border: 0;
+        border-radius: 6px;
+        color: rgba(255, 255, 255, 0.9);
+        flex: 1;
+        min-width: 0;
+        text-align: left;
+        transition: all 0.2s;
+        font-weight: 400;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.1);
+          color: #ffffff;
+        }
+      }
+
+      .new,
+      .deleted,
+      .conflict,
+      .markresolved,
+      .launchmergetool {
+        padding: 3px 5px;
+        flex-shrink: 0;
+        font-size: 0.85em;
+        border-radius: 3px;
+      }
+
+      .new,
+      .additions {
+        color: #4ade80;
+        vertical-align: middle;
+        flex-shrink: 0;
+      }
+
+      .deleted,
+      .deletions {
+        color: #f87171;
+        vertical-align: middle;
+        flex-shrink: 0;
+      }
+
+      .modified {
+        color: #fbbf24;
+        flex-shrink: 0;
+      }
+
+      .additions,
+      .deletions {
+        font-size: 0.85em;
+      }
+
+      .conflict {
+        color: #db12c0;
+
+        .explanation {
+          display: none;
+        }
+
+        &:hover {
+          .explanation {
+            display: inline;
+          }
+
+          .temporary {
+            display: none;
+          }
+        }
+      }
+
+      .markresolved {
+        color: #db12c0;
+        cursor: pointer;
+
+        .explanation {
+          display: none;
+        }
+
+        &:hover {
+          background: #a445ed;
+          color: #000000;
+          border-radius: 3px;
+
+          .explanation {
+            display: inline;
+          }
+        }
+      }
+
+      .launchmergetool {
+        color: #db55ff;
+        cursor: pointer;
+
+        .explanation {
+          display: none;
+        }
+
+        &:hover {
+          background: #a477ff;
+          color: #000000;
+          border-radius: 3px;
+
+          .explanation {
+            display: inline;
+          }
+        }
+      }
+    }
+  }
+
+  .btn-toolbar {
+    margin-bottom: 10px;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+  }
+
+  .commands {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+}
+
+@media (min-width: @screen-md-min) {
+  .staging {
+    .arrow {
+      display: none;
+    }
+  }
+}
+
+.commit-message-title-counter {
+  right: 20px;
+  position: absolute;
+}
+
+.amend-button {
+  padding: 0;
+
+  &:active,
+  &:focus,
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.checkmark {
+  color: #ffffff;
+  display: inline-block;
+  opacity: 0.3;
+  cursor: pointer;
+
+  &.checked {
+    opacity: 0.8;
+  }
+}
