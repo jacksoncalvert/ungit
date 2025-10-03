@@ -46,19 +46,45 @@ const app = express();
 const server = require('http').createServer(app);
 
 gitApi.pathPrefix = '/api';
-
 app.use((req, res, next) => {
   const rootPath = config.rootPath;
+  
+  // Handle exact rootPath (redirect to add trailing slash)
   if (req.url === rootPath) {
-    // always have a trailing slash
     res.redirect(req.url + '/');
     return;
   }
-  if (req.url.indexOf(rootPath) === 0) {
-    req.url = req.url.substring(rootPath.length);
+  
+  // Check if URL starts with rootPath+rootPath (nginx will strip one level)
+  // e.g., /live/8448/live/8448/ -> becomes /live/8448/ which then becomes /
+  const doubleRootPath = rootPath + rootPath;
+  if (req.url.indexOf(doubleRootPath) === 0) {
+    // Strip BOTH rootPaths to get to the actual resource
+    const originalUrl = req.url;
+    req.url = req.url.substring(doubleRootPath.length);
+    logger.info(`[DoubleRootPath] ${originalUrl} -> ${req.url}`);
     next();
     return;
   }
+  
+  // Normal case: URL starts with rootPath once  
+  if (req.url.indexOf(rootPath) === 0) {
+    const originalUrl = req.url;
+    req.url = req.url.substring(rootPath.length);
+    logger.info(`[RootPath] ${originalUrl} -> ${req.url}`);
+    next();
+    return;
+  }
+  
+  // If nginx strips the rootPath entirely, accept it anyway
+  // This allows static assets to work when nginx removes the prefix
+  if (rootPath !== '') {
+    logger.info(`[NoRootPath] Accepting ${req.url} (nginx likely stripped rootPath)`);
+    next();
+    return;
+  }
+  
+  logger.warn(`[RootPath] Rejecting ${req.url} (expected rootPath: ${rootPath})`);
   res.status(400).end();
 });
 

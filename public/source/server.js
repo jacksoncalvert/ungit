@@ -26,7 +26,7 @@ module.exports = Server;
 Server.prototype.initSocket = function () {
   var self = this;
   this.socket = io('', {
-    path: rootPath + '/socket.io',
+    path: rootPath + rootPath + '/socket.io',
   });
   this.socket.on('connect_error', function (err) {
     self._isConnected(function (connected) {

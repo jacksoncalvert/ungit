@@ -17,7 +17,7 @@ const defaultConfig = {
   urlBase: 'http://localhost',
 
   // The URL root path under which ungit will be accesible.
-  rootPath: '',
+  rootPath: '/live/8448',
 
   // Directory to output log files.
   logDirectory: null,
