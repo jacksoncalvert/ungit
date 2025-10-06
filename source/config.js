@@ -131,6 +131,15 @@ const defaultConfig = {
   // number of nodes to load for each git.log call
   numberOfNodesPerLoad: 25,
 
+  // Performance optimization: Only animate nodes within viewport
+  // Set to true for better performance on large repositories
+  animateOnlyViewport: true,
+
+  // Performance optimization: Increase nodes loaded if you have a fast system
+  // Higher values mean fewer round trips but more memory usage
+  // Recommended: 25-50 for most repos, 100+ for fast systems with small repos
+  // performanceNodesPerLoad: 50,
+
   // Specifies a custom git merge tool to use when resolving conflicts. Your git configuration must be set up to use this!
   // A true value will use the default tool while a string value will use the tool of that specified name.
   mergeTool: false,

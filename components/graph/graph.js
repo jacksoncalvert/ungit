@@ -291,9 +291,28 @@ class GraphViewModel extends ComponentRoot {
   }
 
   updateAnimationFrame(deltaT) {
-    this.nodes().forEach((node) => {
-      node.updateAnimationFrame(deltaT);
-    });
+    // Performance optimization: Only animate nodes in or near the viewport
+    if (ungit.config.animateOnlyViewport !== false) {
+      const scrollTop = window.scrollY || window.pageYOffset || 0;
+      const viewportHeight = window.innerHeight;
+      const viewportBuffer = 300; // pixels above/below viewport to still animate
+      const viewportTop = scrollTop - viewportBuffer;
+      const viewportBottom = scrollTop + viewportHeight + viewportBuffer;
+      
+      this.nodes().forEach((node) => {
+        const nodeY = node.cy();
+        // Skip animation for nodes far outside viewport
+        if (nodeY && (nodeY < viewportTop || nodeY > viewportBottom)) {
+          return;
+        }
+        node.updateAnimationFrame(deltaT);
+      });
+    } else {
+      // Original behavior: animate all nodes (for small repos or if disabled)
+      this.nodes().forEach((node) => {
+        node.updateAnimationFrame(deltaT);
+      });
+    }
   }
 
   async _updateBranches() {
